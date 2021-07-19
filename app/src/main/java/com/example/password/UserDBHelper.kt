@@ -1,5 +1,6 @@
-package com.tutorialkart.sqlitetutorial
+package com.example.password
 
+import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
@@ -7,8 +8,7 @@ import android.database.sqlite.SQLiteConstraintException
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteException
 import android.database.sqlite.SQLiteOpenHelper
-
-import java.util.ArrayList
+import java.util.*
 
 class UsersDBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
     override fun onCreate(db: SQLiteDatabase) {
@@ -38,7 +38,7 @@ class UsersDBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME,
 
 
         // Insert the new row, returning the primary key value of the new row
-        val newRowId = db.insert(DBContract.UserEntry.TABLE_NAME, null, values)
+        db.insert(DBContract.UserEntry.TABLE_NAME, null, values)
 
         return true
     }
@@ -57,10 +57,11 @@ class UsersDBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME,
         return true
     }
 
+    @SuppressLint("Recycle")
     fun readUser(userid: String): ArrayList<UserModel> {
         val users = ArrayList<UserModel>()
         val db = writableDatabase
-        var cursor: Cursor? = null
+        val cursor: Cursor?
         try {
             cursor = db.rawQuery("select * from " + DBContract.UserEntry.TABLE_NAME + " WHERE " + DBContract.UserEntry.COLUMN_USER_ID + "='" + userid + "'", null)
         } catch (e: SQLiteException) {
@@ -70,11 +71,11 @@ class UsersDBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME,
         }
 
         var name: String
-        var age: String
+
         if (cursor!!.moveToFirst()) {
-            while (cursor.isAfterLast == false) {
+            while (!cursor.isAfterLast) {
                 name = cursor.getString(cursor.getColumnIndex(DBContract.UserEntry.COLUMN_NAME))
-                age = cursor.getString(cursor.getColumnIndex(DBContract.UserEntry.COLUMN_AGE))
+
 
                 users.add(UserModel(userid, name))
                 cursor.moveToNext()
@@ -83,10 +84,11 @@ class UsersDBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME,
         return users
     }
 
+    @SuppressLint("Recycle")
     fun readAllUsers(): ArrayList<UserModel> {
         val users = ArrayList<UserModel>()
         val db = writableDatabase
-        var cursor: Cursor? = null
+        val cursor: Cursor?
         try {
             cursor = db.rawQuery("select * from " + DBContract.UserEntry.TABLE_NAME, null)
         } catch (e: SQLiteException) {
@@ -96,12 +98,12 @@ class UsersDBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME,
 
         var userid: String
         var name: String
-        var age: String
+
         if (cursor!!.moveToFirst()) {
-            while (cursor.isAfterLast == false) {
+            while (!cursor.isAfterLast) {
                 userid = cursor.getString(cursor.getColumnIndex(DBContract.UserEntry.COLUMN_USER_ID))
                 name = cursor.getString(cursor.getColumnIndex(DBContract.UserEntry.COLUMN_NAME))
-                age = cursor.getString(cursor.getColumnIndex(DBContract.UserEntry.COLUMN_AGE))
+
 
                 users.add(UserModel(userid, name))
                 cursor.moveToNext()
@@ -112,14 +114,13 @@ class UsersDBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME,
 
     companion object {
         // If you change the database schema, you must increment the database version.
-        val DATABASE_VERSION = 1
-        val DATABASE_NAME = "FeedReader.db"
+        var DATABASE_VERSION = 1
+        var DATABASE_NAME = "FeedReader.db"
 
         private val SQL_CREATE_ENTRIES =
             "CREATE TABLE " + DBContract.UserEntry.TABLE_NAME + " (" +
                     DBContract.UserEntry.COLUMN_USER_ID + " TEXT PRIMARY KEY," +
-                    DBContract.UserEntry.COLUMN_NAME + " TEXT," +
-                    DBContract.UserEntry.COLUMN_AGE + " TEXT)"
+                    DBContract.UserEntry.COLUMN_NAME + " TEXT);"
 
         private val SQL_DELETE_ENTRIES = "DROP TABLE IF EXISTS " + DBContract.UserEntry.TABLE_NAME
     }

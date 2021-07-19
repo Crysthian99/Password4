@@ -1,4 +1,4 @@
-package com.tutorialkart.sqlitetutorial
+package com.example.password
 
 import android.provider.BaseColumns
 
@@ -7,10 +7,10 @@ object DBContract {
     /* Inner class that defines the table contents */
     class UserEntry : BaseColumns {
         companion object {
-            val TABLE_NAME = "users"
-            val COLUMN_USER_ID = "userid"
-            val COLUMN_NAME = "name"
-            val COLUMN_AGE = "age"
+            var TABLE_NAME = "users"
+            var COLUMN_USER_ID = "userid"
+            var COLUMN_NAME = "name"
+
         }
     }
 }
