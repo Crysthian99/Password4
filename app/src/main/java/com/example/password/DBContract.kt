@@ -7,10 +7,12 @@ object DBContract {
     /* Inner class that defines the table contents */
     class UserEntry : BaseColumns {
         companion object {
-            var TABLE_NAME = "users"
-            var COLUMN_USER_ID = "userid"
-            var COLUMN_NAME = "name"
-
+            val TABLE_NAME = "users"
+            val COLUMN_WEBID = "webid"
+            val COLUMN_WEB = "web"
+            val COLUMN_USID = "usid"
+            val COLUMN_PASS = "pass"
+            val COLUMN_SALT = "salt"
         }
     }
 }
