@@ -18,4 +18,5 @@
     <string name="show_accounts">SHOW ACCOUNTS</string>
     <string name="password">Password</string>
     <string name="password_input">Password input</string>
+    <string name="hello_">Hello</string>
 </resources>

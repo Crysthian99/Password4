@@ -1,24 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:gravity="center"
-    tools:context="com.example.password.MainActivity">
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/fl_wrapper" />
+    tools:context="com.example.MainActivity2">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/android_password_generator"
-        android:textSize="20sp"
+        android:text="SQLite Tutorial - User Management"
+        android:textSize="20dp"
         android:padding="10dp" />
 
     <LinearLayout
@@ -26,21 +20,35 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
         <EditText
-            android:id="@+id/edittext_userid"
-            android:hint="@string/website"
+            android:id="@+id/edittext_webid"
+            android:hint="Account ID"
             android:gravity="center"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:autofillHints="Website"
-            android:inputType="text" />
+            android:layout_height="wrap_content" />
         <EditText
-            android:id="@+id/edittext_name"
-            android:hint="@string/password"
+            android:id="@+id/edittext_web"
+            android:hint="Website"
             android:gravity="center"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:autofillHints="Password for website"
-            android:inputType="text" />
+            android:layout_height="wrap_content" />
+        <EditText
+            android:id="@+id/edittext_usid"
+            android:hint="User ID"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <EditText
+            android:id="@+id/edittext_pass"
+            android:hint="PassWord"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <EditText
+            android:id="@+id/edittext_salt"
+            android:hint="Salt"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
     <LinearLayout
@@ -53,59 +61,32 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="addUser"
-            android:text="@string/add"
-            style="?android:attr/buttonBarButtonStyle" />
+            android:text="Add" />
 
         <Button
             android:id="@+id/button_delete_user"
-            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="deleteUser"
-            android:text="@string/delete" />
+            android:text="Delete" />
 
         <Button
             android:id="@+id/button_show_all"
-            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="showAllUsers"
-            android:text="@string/show_accounts"
-            tools:ignore="OnClick" />
-
+            android:text="Show All" />
     </LinearLayout>
     <TextView
         android:id="@+id/textview_result"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
-
     <LinearLayout
         android:id="@+id/ll_entries"
         android:padding="15dp"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-
-    </LinearLayout>
-
-
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_navigation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="0dp"
-        android:layout_marginEnd="0dp"
-        android:background="?android:attr/windowBackground"
-        app:itemBackground="@color/design_default_color_primary"
-        app:itemIconTint="#fff"
-        app:itemTextColor="#fff"
-        app:layout_constraintBottom_toBottomOf="parent"
-
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:menu="@menu/nav_menu" />
-
-
+        android:layout_height="wrap_content"></LinearLayout>
 </LinearLayout>

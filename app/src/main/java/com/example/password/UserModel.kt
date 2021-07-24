@@ -1,3 +1,3 @@
 package com.example.password
 
-class UserModel(val userid: String, val name: String)
+class UserModel(val webid: String, val web: String, val usid: String, val pass: String, val salt: String)
