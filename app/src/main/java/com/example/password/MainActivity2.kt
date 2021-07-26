@@ -4,10 +4,15 @@ import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity1.*
+import kotlinx.android.synthetic.main.activitycreate.*
 
 class MainActivity : AppCompatActivity() {
 
+
+
     lateinit var usersDBHelper : UsersDBHelper
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,5 +56,10 @@ class MainActivity : AppCompatActivity() {
             this.ll_entries.addView(tv_user)
         }
         this.textview_result.text = "Fetched " + users.size + " users"
+    }
+
+    fun createMaster(v:View){
+        var master = this.editmasterpass.text.toString()
+
     }
 }
