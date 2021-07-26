@@ -22,26 +22,26 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun addUser(v:View){
-        var webid = this.edittext_webid.text.toString()
-        var web = this.edittext_web.text.toString()
-        var usid = this.edittext_usid.text.toString()
-        var pass = this.edittext_pass.text.toString()
-        var salt = this.edittext_salt.text.toString()
 
-        var result = usersDBHelper.insertUser(UserModel(webid = webid,web = web,usid = usid, pass=pass,salt=salt))
+        var web = this.edittext_web.text.toString()
+
+        var pass = this.edittext_pass.text.toString()
+
+
+        var result = usersDBHelper.insertUser(UserModel("a",web = web, "a", pass=pass,"a" ))
         //clear all edittext s
-        this.edittext_salt.setText("")
+
         this.edittext_pass.setText("")
-        this.edittext_usid.setText("")
+
         this.edittext_web.setText("")
-        this.edittext_webid.setText("")
+
         this.textview_result.text = "Added user : "+result
         this.ll_entries.removeAllViews()
     }
 
     fun deleteUser(v:View){
-        var webid = this.edittext_webid.text.toString()
-        val result = usersDBHelper.deleteUser(webid)
+        var web = this.edittext_web.text.toString()
+        val result = usersDBHelper.deleteUser(web)
         this.textview_result.text = "Deleted user : "+result
         this.ll_entries.removeAllViews()
     }
