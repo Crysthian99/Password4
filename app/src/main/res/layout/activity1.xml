@@ -11,7 +11,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="SQLite Tutorial - User Management"
+        android:text="Create account"
         android:textSize="20dp"
         android:padding="10dp" />
 
@@ -19,33 +19,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-        <EditText
-            android:id="@+id/edittext_webid"
-            android:hint="Account ID"
-            android:gravity="center"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+
         <EditText
             android:id="@+id/edittext_web"
             android:hint="Website"
             android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-        <EditText
-            android:id="@+id/edittext_usid"
-            android:hint="User ID"
-            android:gravity="center"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+
         <EditText
             android:id="@+id/edittext_pass"
             android:hint="PassWord"
-            android:gravity="center"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-        <EditText
-            android:id="@+id/edittext_salt"
-            android:hint="Salt"
             android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />

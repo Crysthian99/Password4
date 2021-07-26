@@ -57,35 +57,8 @@ class UsersDBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME,
         return true
     }
 
-    fun readUser(webid: String): ArrayList<UserModel> {
-        val users = ArrayList<UserModel>()
-        val db = writableDatabase
-        var cursor: Cursor? = null
-        try {
-            cursor = db.rawQuery("select * from " + DBContract.UserEntry.TABLE_NAME + " WHERE " + DBContract.UserEntry.COLUMN_WEBID + "='" + webid + "'", null)
-        } catch (e: SQLiteException) {
-            // if table not yet present, create it
-            db.execSQL(SQL_CREATE_ENTRIES)
-            return ArrayList()
-        }
 
-        var web: String
-        var usid: String
-        var pass: String
-        var salt: String
-        if (cursor!!.moveToFirst()) {
-            while (cursor.isAfterLast == false) {
-                web = cursor.getString(cursor.getColumnIndex(DBContract.UserEntry.COLUMN_WEB))
-                usid = cursor.getString(cursor.getColumnIndex(DBContract.UserEntry.COLUMN_USID))
-                pass = cursor.getString(cursor.getColumnIndex(DBContract.UserEntry.COLUMN_PASS))
-                salt = cursor.getString(cursor.getColumnIndex(DBContract.UserEntry.COLUMN_SALT))
 
-                users.add(UserModel(webid, web, usid, pass, salt))
-                cursor.moveToNext()
-            }
-        }
-        return users
-    }
 
     fun readAllUsers(): ArrayList<UserModel> {
         val users = ArrayList<UserModel>()
