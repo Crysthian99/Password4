@@ -19,4 +19,6 @@
     <string name="password">Password</string>
     <string name="password_input">Password input</string>
     <string name="hello_">Hello</string>
+    <string name="login2">LOGIN</string>
+    <string name="decrypt2">DECRYPT</string>
 </resources>
