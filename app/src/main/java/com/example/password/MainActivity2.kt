@@ -9,6 +9,7 @@ import kotlinx.android.synthetic.main.activitycreate.*
 
 class MainActivity : AppCompatActivity() {
 
+
     var master: String = "0"
     var variableNeeded1 = 0;
 
@@ -18,6 +19,12 @@ class MainActivity : AppCompatActivity() {
         this.master = this.editmasterpass.text.toString()
         setContentView(R.layout.activity1)
     }
+
+
+
+    lateinit var usersDBHelper : UsersDBHelper
+
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,6 +47,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun addUser(v:View){
+
         var users = usersDBHelper.readAllUsers()
         var webid = users.size+1
         var web = this.edittext_web.text.toString()
@@ -52,13 +60,26 @@ class MainActivity : AppCompatActivity() {
             webid =webid,
             web = web, "a", pass =pass,
             salt =salt ))
+
+
+        var web = this.edittext_web.text.toString()
+
+        var pass = this.edittext_pass.text.toString()
+
+
+        var result = usersDBHelper.insertUser(UserModel("a",web = web, "a", pass=pass,"a" ))
+
         //clear all edittext s
 
         this.edittext_pass.setText("")
 
         this.edittext_web.setText("")
 
+
         this.textview_result.text = "Added account : "+result
+
+        this.textview_result.text = "Added user : "+result
+
         this.ll_entries.removeAllViews()
         this.variableNeeded1++
     }
@@ -66,7 +87,11 @@ class MainActivity : AppCompatActivity() {
     fun deleteUser(v:View){
         var web = this.edittext_web.text.toString()
         val result = usersDBHelper.deleteUser(web)
+
         this.textview_result.text = "Deleted account : "+result
+
+        this.textview_result.text = "Deleted user : "+result
+
         this.ll_entries.removeAllViews()
     }
 
@@ -82,5 +107,12 @@ class MainActivity : AppCompatActivity() {
         this.textview_result.text = "Fetched " + users.size + " users"
     }
 
+
+
+
+    fun createMaster(v:View){
+        var master = this.editmasterpass.text.toString()
+
+    }
 
 }
