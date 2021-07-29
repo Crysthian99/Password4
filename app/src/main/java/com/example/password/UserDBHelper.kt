@@ -71,14 +71,14 @@ class UsersDBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME,
             return ArrayList()
         }
 
-        var webid: String
+        var webid: Int
         var web: String
         var usid: String
         var pass: String
         var salt: String
         if (cursor!!.moveToFirst()) {
             while (cursor.isAfterLast == false) {
-                webid = cursor.getString(cursor.getColumnIndex(DBContract.UserEntry.COLUMN_WEBID))
+                webid = cursor.getInt(cursor.getColumnIndex(DBContract.UserEntry.COLUMN_WEBID))
                 web = cursor.getString(cursor.getColumnIndex(DBContract.UserEntry.COLUMN_WEB))
                 usid = cursor.getString(cursor.getColumnIndex(DBContract.UserEntry.COLUMN_USID))
                 pass = cursor.getString(cursor.getColumnIndex(DBContract.UserEntry.COLUMN_PASS))
