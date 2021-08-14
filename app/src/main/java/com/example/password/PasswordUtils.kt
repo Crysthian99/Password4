@@ -1,37 +1,55 @@
 package com.example.password
 
-import java.security.NoSuchAlgorithmException
-import java.security.SecureRandom
-import java.security.spec.InvalidKeySpecException
-import javax.crypto.SecretKeyFactory
-import javax.crypto.spec.PBEKeySpec
+import java.security.MessageDigest
 
-object PasswordUtils {
-    val random = SecureRandom()
 
-    fun generateSalt(): ByteArray {
-        val salt = ByteArray(32)
-        random.nextBytes(salt)
-        return salt
-    }
+    /**
+     * Hashing Utils
+     * @author Sam Clarke <www.samclarke.com>
+     * @license MIT
+     */
+    object HashUtils {
+        fun sha512(input: String) = hashString("SHA-512", input)
 
-    fun isExpectedPassword(password: String, salt: ByteArray, expectedHash: ByteArray): Boolean {
-        val pwdHash = hash(password, salt)
-        if (pwdHash.size != expectedHash.size) return false
-        return pwdHash.indices.all { pwdHash[it] == expectedHash[it] }
-    }
+        fun sha256(input: String) = hashString("SHA-256", input)
 
-    fun hash(password: String, salt: ByteArray): ByteArray {
-        val spec = PBEKeySpec(password.toCharArray(), salt, 1000, 256)
-        try {
-            val skf = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1")
-            return skf.generateSecret(spec).encoded
-        } catch (e: NoSuchAlgorithmException) {
-            throw AssertionError("Error while hashing a password: " + e.message, e)
-        } catch (e: InvalidKeySpecException) {
-            throw AssertionError("Error while hashing a password: " + e.message, e)
-        } finally {
-            spec.clearPassword()
+        fun sha1(input: String) = hashString("SHA-1", input)
+
+        /**
+         * Supported algorithms on Android:
+         *
+         * Algorithm	Supported API Levels
+         * MD5          1+
+         * SHA-1	    1+
+         * SHA-224	    1-8,22+
+         * SHA-256	    1+
+         * SHA-384	    1+
+         * SHA-512	    1+
+         */
+        fun getRandomString(length: Int) : String {
+            val allowedChars = ('A'..'Z') + ('a'..'z') + ('0'..'9')
+            return (1..length)
+                .map { allowedChars.random() }
+                .joinToString("")
+        }
+
+        fun generateSalt(): String {
+            return getRandomString(length = 32)
+        }
+
+        private fun hashString(type: String, input: String): String {
+            val HEX_CHARS = "0123456789ABCDEF"
+            val bytes = MessageDigest
+                .getInstance(type)
+                .digest(input.toByteArray())
+            val result = StringBuilder(bytes.size*2)
+
+            bytes.forEach {
+                val i = it.toInt()
+                result.append(HEX_CHARS[i shr 4 and 0x0f])
+                result.append(HEX_CHARS[i and 0x0f])
+            }
+
+            return result.toString()
         }
     }
-}

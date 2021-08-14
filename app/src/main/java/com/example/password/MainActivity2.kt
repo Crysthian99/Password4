@@ -1,66 +1,97 @@
 package com.example.password
+import AESKnowledgeFcatory.decrypt
+import AESKnowledgeFcatory.encrypt
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.example.password.PasswordUtils.generateSalt
+import com.example.password.HashUtils.generateSalt
+import com.example.password.HashUtils.sha256
 import kotlinx.android.synthetic.main.activity1.*
 import kotlinx.android.synthetic.main.activitycreate.*
+import kotlinx.android.synthetic.main.activitylogin.*
+import java.lang.Character.digit
 
+
+// materials sau materialise pt design Android
 class MainActivity : AppCompatActivity() {
 
     var master: String = "0"
-    var variableNeeded1 = 0;
-
+    var checkLogin2: String = ""
     lateinit var usersDBHelper : UsersDBHelper
 
     fun createMaster(v:View){
         this.master = this.editmasterpass.text.toString()
+
+        val sharedPref = this.getPreferences(Context.MODE_PRIVATE) ?:return
+        with (sharedPref.edit()){
+            putString("cheie",sha256(master))
+            commit()
+        }
+
+        val sharedPref2 = this.getPreferences(Context.MODE_PRIVATE) ?: return
+        val defaultValue = sharedPref2.getString("cheie", "key not found")
+        System.out.println(" Key value = " + defaultValue)
         setContentView(R.layout.activity1)
     }
 
+    fun checklogin(v:View)
+    {
+        this.checkLogin2 = this.editTextTextPassword.text.toString()
+        val castoras = this.getPreferences(Context.MODE_PRIVATE)
+        val defaultValue2 = castoras.getString("cheie", "key not found")
+        if(sha256(this.checkLogin2)==defaultValue2.toString())
+        {
+            setContentView(R.layout.activity1)
+        }
+
+
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        if(kotlin.run { this.master=="0" }) {
+        val castoras = this.getPreferences(Context.MODE_PRIVATE)
+        val defaultValue2 = castoras.getString("cheie", "key not found")
+        System.out.println("Abracanabra= "+defaultValue2)
+        if ((defaultValue2.toString())==null)
             setContentView(R.layout.activitycreate)
-        }
-        else{
-            setContentView(R.layout.activitylogin)
-        }
+        else {setContentView((R.layout.activitylogin))}
 
         usersDBHelper = UsersDBHelper(this)
+    }
 
-        val passwordGenerator = PasswordGenerator()
-        generator.setOnClickListener{
-            val password:String=passwordGenerator.generatePassword(length = 8, specialWord = "crypted")
-            textView3.text=password
+    private fun stringToBytes(input: String): ByteArray? {
+        val length = input.length
+        val output = ByteArray(length / 2)
+        var i = 0
+        while (i < length) {
+            output[i / 2] = (digit(input[i], 16) shl 4 or digit(input[i + 1], 16)) as Byte
+            i += 2
         }
+        return output
     }
 
     fun addUser(v:View){
         var users = usersDBHelper.readAllUsers()
         var webid = users.size+1
         var web = this.edittext_web.text.toString()
-
         var pass = this.edittext_pass.text.toString()
         var salt = generateSalt().toString()
-
-
+        var ananas = this.master+salt
+        var usid = sha256(ananas)
+        var burgundia = encrypt(pass, usid).toString()
+        var burgundia2 = (decrypt(burgundia, usid)).toString()
         var result = usersDBHelper.insertUser(UserModel(
             webid =webid,
-            web = web, "a", pass =pass,
+            web = web, usid= usid, pass = burgundia,
             salt =salt ))
-        //clear all edittext s
-
+        //clear all edittext
         this.edittext_pass.setText("")
-
         this.edittext_web.setText("")
-
-        this.textview_result.text = "Added account : "+result
+        this.textview_result.text = "Added account : "+result+" ||||| "+burgundia2+" |||||"
         this.ll_entries.removeAllViews()
-        this.variableNeeded1++
     }
 
     fun deleteUser(v:View){
@@ -79,7 +110,7 @@ class MainActivity : AppCompatActivity() {
             tv_user.text = it.web.toString() + " - " + it.usid.toString() + " - " + it.pass.toString() + " - " + it.salt.toString()
             this.ll_entries.addView(tv_user)
         }
-        this.textview_result.text = "Fetched " + users.size + " users"
+        this.textview_result.text = "Total of " + users.size + " accounts"
     }
 
 

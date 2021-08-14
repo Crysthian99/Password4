@@ -93,7 +93,7 @@ class UsersDBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME,
     companion object {
         // If you change the database schema, you must increment the database version.
         val DATABASE_VERSION = 1
-        val DATABASE_NAME = "pass.db"
+        val DATABASE_NAME = "pass4.db"
 
         private val SQL_CREATE_ENTRIES =
             "CREATE TABLE " + DBContract.UserEntry.TABLE_NAME + " (" +
