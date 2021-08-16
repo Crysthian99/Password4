@@ -1,7 +1,6 @@
 package com.example.password
 import AESKnowledgeFcatory.decrypt
 import AESKnowledgeFcatory.encrypt
-import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
@@ -11,7 +10,6 @@ import com.example.password.HashUtils.sha256
 import kotlinx.android.synthetic.main.activity1.*
 import kotlinx.android.synthetic.main.activitycreate.*
 import kotlinx.android.synthetic.main.activitylogin.*
-import java.lang.Character.digit
 
 
 // materials sau materialise pt design Android
@@ -24,13 +22,13 @@ class MainActivity : AppCompatActivity() {
     fun createMaster(v:View){
         this.master = this.editmasterpass.text.toString()
 
-        val sharedPref = this.getPreferences(Context.MODE_PRIVATE) ?:return
+        val sharedPref = this.getPreferences(MODE_PRIVATE) ?:return
         with (sharedPref.edit()){
             putString("cheie",sha256(master))
             commit()
         }
 
-        val sharedPref2 = this.getPreferences(Context.MODE_PRIVATE) ?: return
+        val sharedPref2 = this.getPreferences(MODE_PRIVATE) ?: return
         val defaultValue = sharedPref2.getString("cheie", "key not found")
         System.out.println(" Key value = " + defaultValue)
         setContentView(R.layout.activity1)
@@ -39,20 +37,21 @@ class MainActivity : AppCompatActivity() {
     fun checklogin(v:View)
     {
         this.checkLogin2 = this.editTextTextPassword.text.toString()
-        val castoras = this.getPreferences(Context.MODE_PRIVATE)
+        val castoras = this.getPreferences(MODE_PRIVATE)
         val defaultValue2 = castoras.getString("cheie", "key not found")
         if(sha256(this.checkLogin2)==defaultValue2.toString())
         {
             setContentView(R.layout.activity1)
         }
-
-
+        else {
+            textView3.text="Incorrect Password"
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val castoras = this.getPreferences(Context.MODE_PRIVATE)
+        val castoras = this.getPreferences(MODE_PRIVATE)
         val defaultValue2 = castoras.getString("cheie", "key not found")
         System.out.println("Abracanabra= "+defaultValue2)
         if ((defaultValue2.toString())==null)
@@ -62,16 +61,6 @@ class MainActivity : AppCompatActivity() {
         usersDBHelper = UsersDBHelper(this)
     }
 
-    private fun stringToBytes(input: String): ByteArray? {
-        val length = input.length
-        val output = ByteArray(length / 2)
-        var i = 0
-        while (i < length) {
-            output[i / 2] = (digit(input[i], 16) shl 4 or digit(input[i + 1], 16)) as Byte
-            i += 2
-        }
-        return output
-    }
 
     fun addUser(v:View){
         var users = usersDBHelper.readAllUsers()

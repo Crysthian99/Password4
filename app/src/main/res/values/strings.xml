@@ -21,4 +21,6 @@
     <string name="hello_">Hello</string>
     <string name="login2">LOGIN</string>
     <string name="decrypt2">DECRYPT</string>
+    <string name="create_master_password">Create Master Password</string>
+    <string name="create_button">Create</string>
 </resources>
