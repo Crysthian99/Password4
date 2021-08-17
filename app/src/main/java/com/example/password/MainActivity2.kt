@@ -48,6 +48,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    fun gotoaccounts(v: View)
+    {
+        setContentView(R.layout.activityaccounts)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -68,13 +73,12 @@ class MainActivity : AppCompatActivity() {
         var web = this.edittext_web.text.toString()
         var pass = this.edittext_pass.text.toString()
         var salt = generateSalt().toString()
-        var ananas = this.master+salt
-        var usid = sha256(ananas)
-        var burgundia = encrypt(pass, usid).toString()
-        var burgundia2 = (decrypt(burgundia, usid)).toString()
+
+        var burgundia = encrypt(pass, sha256(this.master+salt)).toString()
+        var burgundia2 = (decrypt(burgundia, sha256(this.master+salt))).toString()
         var result = usersDBHelper.insertUser(UserModel(
             webid =webid,
-            web = web, usid= usid, pass = burgundia,
+            web = web, pass = burgundia,
             salt =salt ))
         //clear all edittext
         this.edittext_pass.setText("")
@@ -96,7 +100,7 @@ class MainActivity : AppCompatActivity() {
         users.forEach {
             var tv_user = TextView(this)
             tv_user.textSize = 30F
-            tv_user.text = it.web.toString() + " - " + it.usid.toString() + " - " + it.pass.toString() + " - " + it.salt.toString()
+            tv_user.text = it.web.toString() + " - " + " - " + it.pass.toString() + " - " + it.salt.toString()
             this.ll_entries.addView(tv_user)
         }
         this.textview_result.text = "Total of " + users.size + " accounts"
@@ -104,3 +108,4 @@ class MainActivity : AppCompatActivity() {
 
 
 }
+

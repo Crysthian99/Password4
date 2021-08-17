@@ -34,7 +34,6 @@ class UsersDBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME,
         val values = ContentValues()
         values.put(DBContract.UserEntry.COLUMN_WEBID, user.webid)
         values.put(DBContract.UserEntry.COLUMN_WEB, user.web)
-        values.put(DBContract.UserEntry.COLUMN_USID, user.usid)
         values.put(DBContract.UserEntry.COLUMN_PASS, user.pass)
         values.put(DBContract.UserEntry.COLUMN_SALT, user.salt)
         // Insert the new row, returning the primary key value of the new row
@@ -80,10 +79,9 @@ class UsersDBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME,
             while (cursor.isAfterLast == false) {
                 webid = cursor.getInt(cursor.getColumnIndex(DBContract.UserEntry.COLUMN_WEBID))
                 web = cursor.getString(cursor.getColumnIndex(DBContract.UserEntry.COLUMN_WEB))
-                usid = cursor.getString(cursor.getColumnIndex(DBContract.UserEntry.COLUMN_USID))
                 pass = cursor.getString(cursor.getColumnIndex(DBContract.UserEntry.COLUMN_PASS))
                 salt = cursor.getString(cursor.getColumnIndex(DBContract.UserEntry.COLUMN_SALT))
-                users.add(UserModel(webid, web, usid, pass, salt))
+                users.add(UserModel(webid, web, pass, salt))
                 cursor.moveToNext()
             }
         }
@@ -99,7 +97,6 @@ class UsersDBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME,
             "CREATE TABLE " + DBContract.UserEntry.TABLE_NAME + " (" +
                     DBContract.UserEntry.COLUMN_WEBID + " TEXT PRIMARY KEY," +
                     DBContract.UserEntry.COLUMN_WEB + " TEXT," +
-                    DBContract.UserEntry.COLUMN_USID + " TEXT," +
                     DBContract.UserEntry.COLUMN_PASS + " TEXT," +
                     DBContract.UserEntry.COLUMN_SALT + " TEXT)"
 

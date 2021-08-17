@@ -10,7 +10,6 @@ object DBContract {
             val TABLE_NAME = "users"
             val COLUMN_WEBID = "webid"
             val COLUMN_WEB = "web"
-            val COLUMN_USID = "usid"
             val COLUMN_PASS = "pass"
             val COLUMN_SALT = "salt"
         }
