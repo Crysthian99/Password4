@@ -23,4 +23,6 @@
     <string name="decrypt2">DECRYPT</string>
     <string name="create_master_password">Create Master Password</string>
     <string name="create_button">Create</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

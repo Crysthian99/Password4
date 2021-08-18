@@ -1,5 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/crist/AndroidStudioProjects/Password/app/src/main/res/drawable/ic_add.xml" value="0.23177083333333334" />
+        <entry key="..\:/Users/crist/AndroidStudioProjects/Password/app/src/main/res/layout/activity1.xml" value="0.215625" />
+        <entry key="..\:/Users/crist/AndroidStudioProjects/Password/app/src/main/res/layout/activity_main.xml" value="0.215625" />
+        <entry key="..\:/Users/crist/AndroidStudioProjects/Password/app/src/main/res/layout/activityaccounts.xml" value="0.215625" />
+        <entry key="..\:/Users/crist/AndroidStudioProjects/Password/app/src/main/res/layout/activitylogin.xml" value="0.215625" />
+        <entry key="..\:/Users/crist/AndroidStudioProjects/Password/app/src/main/res/layout/fragment_add.xml" value="0.32192846034214617" />
+        <entry key="..\:/Users/crist/AndroidStudioProjects/Password/app/src/main/res/layout/fragment_list.xml" value="0.25" />
+      </map>
+    </option>
+  </component>
   <component name="EntryPointsManager">
     <list size="1">
       <item index="0" class="java.lang.String" itemvalue="android.annotation.SuppressLint" />
